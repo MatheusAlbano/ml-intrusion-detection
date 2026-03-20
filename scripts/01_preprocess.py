@@ -77,9 +77,11 @@ def main():
         y_test = test_df[target_col].astype(int)
         target_used = target_col
 
-    # Remove target(s) from X
-    X_train = train_df.drop(columns=[target_col], errors="ignore")
-    X_test = test_df.drop(columns=[target_col], errors="ignore")
+    # Columns that may cause data leakage
+    leakage_cols = ["attack_cat", "Attack_cat"]
+
+    X_train = train_df.drop(columns=[target_col] + leakage_cols, errors="ignore")
+    X_test = test_df.drop(columns=[target_col] + leakage_cols, errors="ignore")
 
     # Remove clearly useless columns, if any exist
     # (some versions have 'id' or "Unnamed" columns)
