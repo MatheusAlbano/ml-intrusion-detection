@@ -2,6 +2,8 @@
 .venv/
 __pycache__/
 data/raw/
-data/processed/
-artifacts/
-reports/figures/
+reports/*.json
+reports/figures/*
+data/raw/*
+data/processed/*
+artifacts/*
