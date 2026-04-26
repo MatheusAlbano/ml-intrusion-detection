@@ -10,25 +10,32 @@ from src.config import (
 class IntrusionDetector:
 
     def __init__(self):
-        print("Carregando modelo treinado...")
+        print("Loading trained model...")
         self.model = joblib.load(MODEL_PATH)
 
-        print("Carregando pipeline de preprocessamento...")
+        print("Loading preprocessing pipeline...")
         self.preprocessor = joblib.load(PIPELINE_PATH)
 
-        print("Detector inicializado com sucesso!")
+        print("Detector initialized successfully!")
 
     def predict(self, input_data: dict):
-        # Convert input into DataFrame
+        # Convert input data into DataFrame
         df = pd.DataFrame([input_data])
 
-        # Transform data using fitted pipeline
+        # Apply preprocessing pipeline
         processed_data = self.preprocessor.transform(df)
 
-        # Predict class
+        # Preserve feature names to avoid sklearn warnings
+        if hasattr(self.model, "feature_names_in_"):
+            processed_data = pd.DataFrame(
+                processed_data,
+                columns=self.model.feature_names_in_
+            )
+
+        # Predict class label
         prediction = self.model.predict(processed_data)[0]
 
-        # Predict probabilities
+        # Predict class probabilities
         probabilities = self.model.predict_proba(processed_data)[0]
 
         return {
