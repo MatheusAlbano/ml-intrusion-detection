@@ -18,7 +18,7 @@ from src.config import (
 
 
 def main():
-    print("📥 Carregando dados de teste...")
+    print("Carregando dados de teste...")
 
     # Load processed test dataset
     df = pd.read_csv(PROCESSED_TEST)
@@ -29,15 +29,15 @@ def main():
 
     print(f"Dataset de teste: {X_test.shape}")
 
-    print("\n📦 Carregando modelo treinado...")
+    print("\n Carregando modelo treinado...")
     model = joblib.load(MODEL_PATH)
 
     # Make predictions
-    print("\n🤖 Realizando previsões...")
+    print("\nRealizando previsões...")
     y_pred = model.predict(X_test)
 
     # Classification Report
-    print("\n📊 Gerando relatório de classificação...")
+    print("\n Gerando relatório de classificação...")
     report = classification_report(y_test, y_pred, output_dict=True)
 
     PATHS.reports.mkdir(exist_ok=True)
@@ -46,12 +46,12 @@ def main():
     with open(report_path, "w") as f:
         json.dump(report, f, indent=4)
 
-    print("📄 Relatório salvo em:", report_path)
+    print("Relatório salvo em:", report_path)
 
     # ROC-AUC
     auc = None
     if hasattr(model, "predict_proba"):
-        print("\n📈 Calculando ROC-AUC...")
+        print("\nCalculando ROC-AUC...")
         proba = model.predict_proba(X_test)[:, 1]
         auc = roc_auc_score(y_test, proba)
 
@@ -60,10 +60,10 @@ def main():
             json.dump({"roc_auc": float(auc)}, f, indent=4)
 
         print(f"ROC-AUC: {auc:.4f}")
-        print("📄 ROC salvo em:", auc_path)
+        print("ROC salvo em:", auc_path)
 
     # Confusion Matrix
-    print("\n📉 Gerando matriz de confusão...")
+    print("\n Gerando matriz de confusão...")
 
     PATHS.figures.mkdir(parents=True, exist_ok=True)
 
@@ -77,9 +77,9 @@ def main():
     plt.savefig(fig_path, dpi=200, bbox_inches="tight")
     plt.close()
 
-    print("🖼 Matriz salva em:", fig_path)
+    print("Matriz salva em:", fig_path)
 
-    print("\n✅ Avaliação concluída com sucesso!")
+    print("\n Avaliação concluída com sucesso!")
 
 
 if __name__ == "__main__":

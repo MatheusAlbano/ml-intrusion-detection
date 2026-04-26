@@ -98,7 +98,7 @@ def main():
     numeric_cols = X_train.select_dtypes(include=["number", "bool"]).columns.tolist()
     categorical_cols = [c for c in X_train.columns if c not in numeric_cols]
 
-    print(f"🔢 Numéricas: {len(numeric_cols)} | 🔤 Categóricas: {len(categorical_cols)}")
+    print(f"Numéricas: {len(numeric_cols)} | Categóricas: {len(categorical_cols)}")
 
     numeric_pipe = Pipeline(
         steps=[
@@ -122,10 +122,10 @@ def main():
         remainder="drop",
     )
 
-    print("⚙️ Ajustando pipeline (fit no treino)...")
+    print("Ajustando pipeline (fit no treino)...")
     preprocessor.fit(X_train)
 
-    print("➡️ Transformando treino e teste...")
+    print("Transformando treino e teste...")
     X_train_t = preprocessor.transform(X_train)
     X_test_t = preprocessor.transform(X_test)
 
@@ -155,7 +155,7 @@ def main():
     }
     schema_path = PATHS.artifacts / "schema.json"
     schema_path.write_text(json.dumps(schema, indent=2), encoding="utf-8")
-    print(f"🧾 Schema salvo em: {schema_path}")
+    print(f"Schema salvo em: {schema_path}")
 
     # Save processed CSV
     train_out = pd.DataFrame(X_train_t, columns=feature_names)
@@ -167,10 +167,10 @@ def main():
     train_out.to_csv(PROCESSED_TRAIN, index=False)
     test_out.to_csv(PROCESSED_TEST, index=False)
 
-    print(f"📦 Train processed: {PROCESSED_TRAIN} -> {train_out.shape}")
-    print(f"📦 Test processed:  {PROCESSED_TEST} -> {test_out.shape}")
+    print(f"Train processed: {PROCESSED_TRAIN} -> {train_out.shape}")
+    print(f"Test processed:  {PROCESSED_TEST} -> {test_out.shape}")
 
-    print("\n✅ Preprocessamento concluído com sucesso!")
+    print("\n Preprocessamento concluído com sucesso!")
 
 
 if __name__ == "__main__":

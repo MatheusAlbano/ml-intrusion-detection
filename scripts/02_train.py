@@ -70,11 +70,11 @@ def main():
         best_name = "LogisticRegression"
         best_score = lr_f1
 
-    print(f"\n🏆 Melhor modelo: {best_name} (F1={best_score:.4f})")
+    print(f"\n Melhor modelo: {best_name} (F1={best_score:.4f})")
 
     # Final Training
     # Train the selected model on the full dataset
-    print("\n⚙️ Treinando modelo final com todos os dados...")
+    print("\n Treinando modelo final com todos os dados...")
     best_model.fit(X, y)
 
     # Save Model
@@ -91,10 +91,10 @@ def main():
     with open(METRICS_PATH, "w") as f:
         json.dump(metrics, f, indent=4)
 
-    print("\n💾 Modelo salvo em:", MODEL_PATH)
-    print("📊 Métricas salvas em:", METRICS_PATH)
+    print("\nModelo salvo em:", MODEL_PATH)
+    print("Métricas salvas em:", METRICS_PATH)
 
-    print("\n✅ Treinamento concluído!")
+    print("\nTreinamento concluído!")
 
 
 if __name__ == "__main__":

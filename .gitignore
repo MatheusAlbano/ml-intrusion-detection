@@ -1,9 +1,20 @@
+# IDE
 .idea/
+
+# Virtual environment
 .venv/
+
+# Python
 __pycache__/
-data/raw/
-reports/*.json
-reports/figures/*
+*.pyc
+
+# Data (raw e processado)
 data/raw/*
 data/processed/*
+
+# Artifacts (modelos, pipeline)
 artifacts/*
+
+# Reports (arquivos gerados)
+reports/*.json
+reports/figures/*
