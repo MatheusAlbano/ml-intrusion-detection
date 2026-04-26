@@ -22,7 +22,7 @@ def main():
     print("\n Iniciando simulação de tráfego em tempo real...\n")
 
     # Simulate first 20 traffic samples
-    for index, row in df.head(20).iterrows():
+    for index, row in df.sample(20, random_state=42).iterrows():
         sample = row.to_dict()
 
         # Predict traffic type
