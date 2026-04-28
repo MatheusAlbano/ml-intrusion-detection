@@ -10,6 +10,8 @@ import streamlit as st
 import plotly.express as px
 
 from src.analytics import AlertAnalytics
+from dashboard.feature_importance import render_feature_importance
+from src.report_exporter import ReportExporter
 
 
 st.set_page_config(
@@ -72,8 +74,8 @@ def main():
 
     filtered_df = df[
         (df["severity"].isin(severity_filter)) &
-        (df["probability"] >= probability_filter)
-    ]
+        (df.get("probability", 0) >= probability_filter)
+        ]
 
     st.subheader("Recent Alerts")
     st.dataframe(
@@ -87,7 +89,14 @@ def main():
 
     severity_chart = px.histogram(
         filtered_df,
-        x="severity"
+        x="severity",
+        category_orders={
+            "severity": [
+                "critical",
+                "high",
+                "medium"
+            ]
+        }
     )
 
     st.plotly_chart(
@@ -112,7 +121,9 @@ def main():
     timeline_chart = px.line(
         filtered_df.sort_values("timestamp"),
         x="timestamp",
-        y="probability"
+        y="probability",
+        color="severity",
+        markers=True
     )
 
     st.plotly_chart(
@@ -120,6 +131,23 @@ def main():
         use_container_width=True
     )
 
+    st.subheader("Export Reports")
+
+    exporter = ReportExporter()
+
+    if st.button("Export CSV Report"):
+        file_path = exporter.export_csv()
+
+        if file_path:
+            st.success(
+                f"Report exported: {file_path}"
+            )
+        else:
+            st.warning(
+                "No alerts available to export."
+            )
+
+    render_feature_importance()
 
 if __name__ == "__main__":
     main()
