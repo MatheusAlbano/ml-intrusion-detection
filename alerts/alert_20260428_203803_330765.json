@@ -1,0 +1,8 @@
+{
+    "timestamp": "2026-04-28T20:38:03.330765",
+    "type": "intrusion_detected",
+    "severity": "high",
+    "probability": 0.86,
+    "prediction": 1,
+    "label": "attack"
+}

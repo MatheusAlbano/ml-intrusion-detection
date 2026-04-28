@@ -1,5 +1,3 @@
-# Alert system module
-
 from pathlib import Path
 from datetime import datetime
 import json

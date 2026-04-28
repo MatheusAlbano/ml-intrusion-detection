@@ -19,24 +19,25 @@ class IntrusionDetector:
         print("Detector initialized successfully!")
 
     def predict(self, input_data: dict):
-        # Convert input data into DataFrame
+        """
+        Predict if input is normal or attack
+        """
+
         df = pd.DataFrame([input_data])
 
-        # Apply preprocessing pipeline
         processed_data = self.preprocessor.transform(df)
 
-        # Preserve feature names to avoid sklearn warnings
         if hasattr(self.model, "feature_names_in_"):
             processed_data = pd.DataFrame(
                 processed_data,
                 columns=self.model.feature_names_in_
             )
 
-        # Predict class label
         prediction = self.model.predict(processed_data)[0]
 
-        # Predict class probabilities
-        probabilities = self.model.predict_proba(processed_data)[0]
+        probabilities = self.model.predict_proba(
+            processed_data
+        )[0]
 
         return {
             "prediction": int(prediction),
