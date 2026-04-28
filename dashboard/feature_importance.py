@@ -1,12 +1,15 @@
+import sys
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(ROOT_DIR))
+
 import streamlit as st
 import pandas as pd
 import joblib
 import plotly.express as px
 
-from pathlib import Path
-
-
-MODEL_PATH = Path("models/intrusion_detector.pkl")
+from src.config import MODEL_PATH
 
 
 def load_model():
@@ -42,7 +45,9 @@ def render_feature_importance():
     importance_df = get_feature_importance()
 
     if importance_df is None:
-        st.warning("Model does not support feature importance.")
+        st.warning(
+            "Model does not support feature importance."
+        )
         return
 
     top_features = importance_df.head(15)
@@ -56,7 +61,9 @@ def render_feature_importance():
     )
 
     fig.update_layout(
-        yaxis={"categoryorder": "total ascending"}
+        yaxis={
+            "categoryorder": "total ascending"
+        }
     )
 
     st.plotly_chart(

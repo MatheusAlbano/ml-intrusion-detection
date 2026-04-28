@@ -12,6 +12,7 @@ import plotly.express as px
 from src.analytics import AlertAnalytics
 from dashboard.feature_importance import render_feature_importance
 from src.report_exporter import ReportExporter
+from src.pdf_report import PDFReportGenerator
 
 
 st.set_page_config(
@@ -146,6 +147,14 @@ def main():
             st.warning(
                 "No alerts available to export."
             )
+
+    if st.button("Export PDF Report"):
+        pdf_generator = PDFReportGenerator()
+        file_path = pdf_generator.generate()
+
+        st.success(
+            f"PDF report exported: {file_path}"
+        )
 
     render_feature_importance()
 
